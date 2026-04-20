@@ -1,0 +1,246 @@
+.admin-dashboard-container {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 2rem;
+  color: #1e293b;
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.back-btn-dashboard {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f1f5f9;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.back-btn-dashboard:hover {
+  background: #e2e8f0;
+}
+
+.admin-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-icon {
+  color: #e11a5b;
+}
+
+.admin-header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.admin-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e11a5b;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  background: #bf124a;
+  transform: translateY(-1px);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.toast {
+  position: fixed;
+  top: 6rem;
+  right: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.success-toast {
+  background: #10b981;
+  color: white;
+}
+
+.error-toast {
+  background: #ef4444;
+  color: white;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.admin-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem 0;
+  color: #64748b;
+}
+
+.no-pending-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 5rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.unverified-table-container {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.unverified-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.unverified-table th {
+  background: #f8fafc;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.unverified-table td {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.td-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  background: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.skill-tag-pill {
+  background: #f0f7ff;
+  color: #0284c7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid #e0f2fe;
+}
+
+.td-flex {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-approve, .btn-reject {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.btn-approve {
+  background: #10b981;
+  color: white;
+}
+
+.btn-approve:hover {
+  background: #059669;
+  box-shadow: 0 4px 6px -1px rgb(16 185 129 / 0.4);
+}
+
+.btn-reject {
+  background: white;
+  color: #ef4444;
+  border-color: #fecaca;
+}
+
+.btn-reject:hover {
+  background: #fef2f2;
+}
+
+.btn-approve:disabled, .btn-reject:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

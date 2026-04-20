@@ -1,0 +1,115 @@
+.how-it-works {
+  background: relative;
+  position: relative;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+  position: relative;
+}
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.step-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover .step-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.step-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.step-description {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.step-connector {
+  position: absolute;
+  top: 40px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background: dashed 2px var(--surface-border);
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.slider-indicators {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .step-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .steps-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .steps-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .step-card {
+    min-width: 100%;
+    scroll-snap-align: center;
+  }
+
+  .slider-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--surface-border);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .indicator-dot.active {
+    background-color: var(--primary);
+    width: 24px;
+    border-radius: 10px;
+  }
+}

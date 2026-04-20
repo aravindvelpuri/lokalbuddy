@@ -1,0 +1,116 @@
+.testimonials {
+  position: relative;
+  background: var(--surface);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.testimonial-card {
+  position: relative;
+  padding: 2.5rem;
+}
+
+.quote-icon {
+  font-family: serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--primary);
+  opacity: 0.2;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+.testimonial-content {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.author-info h4 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.author-info span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.slider-indicators {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .testimonials-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonial-card {
+    min-width: 100%;
+    scroll-snap-align: center;
+  }
+
+  .slider-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--surface-border);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .indicator-dot.active {
+    background-color: var(--primary);
+    width: 24px;
+    border-radius: 10px;
+  }
+}
