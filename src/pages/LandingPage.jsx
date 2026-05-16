@@ -10,10 +10,11 @@ import Services from '../components/Services';
 import Suppliers from '../components/Suppliers';
 import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
+import ProfessionalsList from './ProfessionalsList';
 import { API_URL } from '../constants';
 
 
-const LandingPage = ({ onAdminClick, onProfileClick }) => {
+const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileClick, onCategoryClick, onBack }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [registrationRole, setRegistrationRole] = useState('Professional');
@@ -119,14 +120,21 @@ const LandingPage = ({ onAdminClick, onProfileClick }) => {
         onClose={() => setIsSuccessModalOpen(false)}
       />
 
-      <Hero onRegisterClick={openRegister} user={currentUser} />
-      <HowItWorks />
-      {(!currentUser || !isSubscribed) && (
-        <Pricing onRegisterClick={openRegister} user={currentUser} />
+      {view === 'home' ? (
+        <>
+          <Hero onRegisterClick={openRegister} user={currentUser} />
+          <HowItWorks />
+          {(!currentUser || !isSubscribed) && (
+            <Pricing onRegisterClick={openRegister} user={currentUser} />
+          )}
+          <Services key={`services-${currentUser?._id || 'guest'}`} onCategoryClick={onCategoryClick} />
+          <Suppliers key={`suppliers-${currentUser?._id || 'guest'}`} isSubscribed={isSubscribed} />
+          <Testimonials />
+        </>
+      ) : (
+        <ProfessionalsList category={selectedCategory} onBack={onBack} />
       )}
-      <Services key={`services-${currentUser?._id || 'guest'}`} />
-      <Suppliers key={`suppliers-${currentUser?._id || 'guest'}`} isSubscribed={isSubscribed} />
-      <Testimonials />
+      
       <Footer onRegisterClick={openRegister} user={currentUser} />
     </>
   );
