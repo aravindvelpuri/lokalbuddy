@@ -90,31 +90,31 @@ const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileC
 
   return (
     <>
-      <Navbar 
-        user={currentUser} 
-        onRegisterClick={() => setIsRegisterModalOpen(true)} 
+      <Navbar
+        user={currentUser}
+        onRegisterClick={() => setIsRegisterModalOpen(true)}
         onSignInClick={() => setIsLoginModalOpen(true)}
         onLogout={handleLogout}
         onAdminClick={onAdminClick}
         onProfileClick={onProfileClick}
       />
 
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
         onLoginSuccess={handleLoginSuccess}
         onSwitchToRegister={openRegister}
       />
 
-      <RegisterModal 
-        isOpen={isRegisterModalOpen} 
-        onClose={() => setIsRegisterModalOpen(false)} 
+      <RegisterModal
+        isOpen={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
         onLoginSuccess={handleRegisterSuccess}
         initialRole={registrationRole}
       />
 
-      <SuccessModal 
-        isOpen={isSuccessModalOpen} 
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
         title={successInfo.title}
         message={successInfo.message}
         onClose={() => setIsSuccessModalOpen(false)}
@@ -123,18 +123,18 @@ const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileC
       {view === 'home' ? (
         <>
           <Hero onRegisterClick={openRegister} user={currentUser} />
+          <Services key={`services-${currentUser?._id || 'guest'}`} onCategoryClick={onCategoryClick} />
           <HowItWorks />
           {(!currentUser || !isSubscribed) && (
             <Pricing onRegisterClick={openRegister} user={currentUser} />
           )}
-          <Services key={`services-${currentUser?._id || 'guest'}`} onCategoryClick={onCategoryClick} />
           <Suppliers key={`suppliers-${currentUser?._id || 'guest'}`} isSubscribed={isSubscribed} />
           <Testimonials />
         </>
       ) : (
         <ProfessionalsList category={selectedCategory} onBack={onBack} />
       )}
-      
+
       <Footer onRegisterClick={openRegister} user={currentUser} />
     </>
   );

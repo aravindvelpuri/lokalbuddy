@@ -7,18 +7,18 @@ import { API_URL } from '../constants';
 
 const ProfessionalsList = ({ category, onBack }) => {
   const [labours, setLabours] = useState([]);
-  
+
   // Search & Pagination State
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  
+
   // Loading States
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState('');
-  
+
   // Modal States
   const [showConfirm, setShowConfirm] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -34,7 +34,7 @@ const ProfessionalsList = ({ category, onBack }) => {
       setShowAlert(true);
       return;
     }
-    setShowConfirm(true); 
+    setShowConfirm(true);
   };
 
   const confirmSubscription = async () => {
@@ -42,15 +42,15 @@ const ProfessionalsList = ({ category, onBack }) => {
     const token = localStorage.getItem('token');
     const userRole = localStorage.getItem('userRole');
     const user = JSON.parse(localStorage.getItem('user'));
-    
-    const endpoint = userRole === 'Professional' 
-      ? `${API_URL}/subscribe-pro` 
+
+    const endpoint = userRole === 'Professional'
+      ? `${API_URL}/subscribe-pro`
       : `${API_URL}/subscribe`;
 
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'token': token
         },
@@ -75,12 +75,12 @@ const ProfessionalsList = ({ category, onBack }) => {
 
   const handleConnect = (labour) => {
     if (labour.leadType === 'through_me') {
-       setAlertContent({
-           title: 'Enquiry Contact',
-           message: `For enquiries regarding ${labour.FullName}, please contact: ${labour.AddedByName || 'Admin'} at ${labour.AddedBy || 'our support line'}.`
-       });
-       setShowAlert(true);
-       return;
+      setAlertContent({
+        title: 'Enquiry Contact',
+        message: `For enquiries regarding ${labour.FullName}, please contact: ${labour.AddedByName || 'Admin'} at ${labour.AddedBy || 'our support line'}.`
+      });
+      setShowAlert(true);
+      return;
     }
 
     if (labour.isUnlocked) {
@@ -96,7 +96,7 @@ const ProfessionalsList = ({ category, onBack }) => {
       else setLoadingMore(true);
 
       const token = localStorage.getItem('token');
-      
+
       const queryParams = new URLSearchParams({
         page: pageNum,
         limit: 12,
@@ -111,15 +111,15 @@ const ProfessionalsList = ({ category, onBack }) => {
         headers: token ? { 'token': token } : {}
       });
       const labResult = await labResponse.json();
-      
+
       const fetchedLabours = labResult.data || [];
-      
+
       if (append) {
         setLabours(prev => [...prev, ...fetchedLabours]);
       } else {
         setLabours(fetchedLabours);
       }
-      
+
       setTotalPages(labResult.totalPages || 1);
 
     } catch (err) {
@@ -168,14 +168,14 @@ const ProfessionalsList = ({ category, onBack }) => {
     <div className="page-container" style={{ paddingTop: '80px', minHeight: '100vh', background: 'var(--bg)' }}>
       <section className="services" style={{ background: 'transparent' }}>
         <div className="section-container">
-          <button 
-            className="button button-outline" 
-            onClick={onBack} 
+          <button
+            className="button button-outline"
+            onClick={onBack}
             style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content' }}
           >
             <ArrowLeft size={18} /> Back
           </button>
-          
+
           <h2 className="heading-title">
             <span className="text-primary">{category && category !== 'All' ? category : 'All'}</span> Professionals
           </h2>
@@ -183,20 +183,11 @@ const ProfessionalsList = ({ category, onBack }) => {
 
           {/* Search & Filters */}
           <div className="search-filters glass-card">
-            <div className="search-box">
-              <Search size={18} style={{ color: 'var(--text-secondary)', marginRight: '0.5rem' }} />
-              <input 
-                type="text" 
-                placeholder="Search name..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
             <div className="location-box">
               <MapPin size={18} style={{ color: 'var(--text-secondary)', marginRight: '0.5rem' }} />
-              <input 
-                type="text" 
-                placeholder="City or location..." 
+              <input
+                type="text"
+                placeholder="City or location..."
                 value={locationQuery}
                 onChange={(e) => setLocationQuery(e.target.value)}
               />
@@ -207,15 +198,15 @@ const ProfessionalsList = ({ category, onBack }) => {
 
           <div className="professionals-grid">
             {loading ? (
-               Array.from({ length: 6 }).map((_, i) => <React.Fragment key={i}>{renderSkeleton()}</React.Fragment>)
+              Array.from({ length: 6 }).map((_, i) => <React.Fragment key={i}>{renderSkeleton()}</React.Fragment>)
             ) : labours.length === 0 ? (
-               <div className="empty-state glass-card" style={{ gridColumn: '1 / -1', padding: '4rem 2rem', textAlign: 'center' }}>
-                 <Search size={48} style={{ color: 'var(--text-secondary)', margin: '0 auto 1rem', opacity: 0.5 }} />
-                 <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>No professionals found</h3>
-                 <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search or location filters.</p>
-               </div>
+              <div className="empty-state glass-card" style={{ gridColumn: '1 / -1', padding: '4rem 2rem', textAlign: 'center' }}>
+                <Search size={48} style={{ color: 'var(--text-secondary)', margin: '0 auto 1rem', opacity: 0.5 }} />
+                <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>No professionals found</h3>
+                <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search or location filters.</p>
+              </div>
             ) : (
-               labours.map((labour, index) => (
+              labours.map((labour, index) => (
                 <div key={labour._id || index} className="pro-card glass-card">
                   {labour.isVerified && (
                     <div className="badge-verified">
@@ -225,18 +216,18 @@ const ProfessionalsList = ({ category, onBack }) => {
                   {!labour.isVerified && (
                     <div className="badge-unverified">COMMUNITY</div>
                   )}
-                  
+
                   <div className="pro-avatar">
                     <div className="avatar-circle">
                       <User size={32} />
                     </div>
                   </div>
-                  
+
                   <div className="pro-info">
                     <h3 className="pro-name">{labour.FullName}</h3>
                     <p className="pro-location"><MapPin size={16} /> {labour.Location}</p>
                     <p className="pro-location" style={{ marginTop: '0.2rem', color: 'var(--primary)', fontWeight: '500' }}>{labour.SelectSkill}</p>
-                    
+
                     <div className="pro-phone mt-2">
                       <Phone size={16} />
                       {labour.leadType === 'through_me' ? (
@@ -257,16 +248,16 @@ const ProfessionalsList = ({ category, onBack }) => {
                       <p className="pro-description">{labour.Description}</p>
                     )}
                   </div>
-                  
+
                   {labour.leadType === 'through_me' ? (
-                    <button 
+                    <button
                       className="button w-full mt-auto button-primary"
                       onClick={() => handleConnect(labour)}
                     >
                       Enquiry Now
                     </button>
                   ) : (
-                    <button 
+                    <button
                       className={`button w-full mt-auto ${labour.isUnlocked ? 'button-outline' : 'button-primary'}`}
                       onClick={() => handleConnect(labour)}
                     >
@@ -282,8 +273,8 @@ const ProfessionalsList = ({ category, onBack }) => {
           {/* Load More Button */}
           {!loading && page < totalPages && (
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
-              <button 
-                className="button button-outline" 
+              <button
+                className="button button-outline"
                 onClick={handleLoadMore}
                 disabled={loadingMore}
                 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 2rem' }}
@@ -296,7 +287,7 @@ const ProfessionalsList = ({ category, onBack }) => {
         </div>
 
         {/* Modals */}
-        <ConfirmModal 
+        <ConfirmModal
           isOpen={showConfirm}
           onClose={() => setShowConfirm(false)}
           onConfirm={confirmSubscription}
@@ -305,7 +296,7 @@ const ProfessionalsList = ({ category, onBack }) => {
           confirmText="Unlock Access"
         />
 
-        <AlertModal 
+        <AlertModal
           isOpen={showAlert}
           onClose={() => setShowAlert(false)}
           title={alertContent.title}

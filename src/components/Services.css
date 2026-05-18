@@ -295,6 +295,29 @@
   .pro-name {
     font-size: 1.2rem;
   }
+
+  .category-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .category-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .category-icon-wrapper {
+    margin-right: 0;
+    margin-bottom: 0.75rem;
+    width: 45px;
+    height: 45px;
+  }
+
+  .category-card-title {
+    font-size: 0.9rem;
+  }
 }
 
 /* Category Cards Styles */
