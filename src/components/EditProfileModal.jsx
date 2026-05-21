@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { X, MapPin, User, FileText } from 'lucide-react';
-import LocationPickerModal from './LocationPickerModal';
 import AlertModal from './AlertModal';
 import './BaseModal.css';
 import { API_URL } from '../constants';
+import LocationSelect from './LocationSelect';
 
 
 const EditProfileModal = ({ isOpen, onClose, initialData, onSaveSuccess }) => {
@@ -13,7 +13,7 @@ const EditProfileModal = ({ isOpen, onClose, initialData, onSaveSuccess }) => {
     Description: ''
   });
   const [loading, setLoading] = useState(false);
-  const [showLocationPicker, setShowLocationPicker] = useState(false);
+  const [districts, setDistricts] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertContent, setAlertContent] = useState({ title: '', message: '' });
 
@@ -28,6 +28,23 @@ const EditProfileModal = ({ isOpen, onClose, initialData, onSaveSuccess }) => {
       });
     }
   }, [isOpen, initialData]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const fetchConstituencies = async () => {
+        try {
+          const response = await fetch(`${API_URL.replace('/skillLabour', '/alldiscons/alldiscons')}`);
+          if (response.ok) {
+            const data = await response.json();
+            setDistricts(data);
+          }
+        } catch (err) {
+          console.error("Failed to fetch constituencies:", err);
+        }
+      };
+      fetchConstituencies();
+    }
+  }, [isOpen]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -107,15 +124,12 @@ const EditProfileModal = ({ isOpen, onClose, initialData, onSaveSuccess }) => {
 
           <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <label style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', fontWeight: '500' }}>Location</label>
-            <div 
-              onClick={() => setShowLocationPicker(true)}
-              style={{ position: 'relative', cursor: 'pointer' }}
-            >
-              <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary)' }}/>
-              <div style={{ width: '100%', padding: '0.9rem 1rem 0.9rem 3rem', borderRadius: '10px', border: '1.5px solid var(--primary)', background: 'rgba(225, 26, 91, 0.03)', color: 'var(--text-primary)', minHeight: '50px', display: 'flex', alignItems: 'center', fontSize: '1rem' }}>
-                {formData.Location || 'Tap to select location on map...'}
-              </div>
-            </div>
+            <LocationSelect
+              value={formData.Location}
+              onChange={(val) => setFormData(prev => ({ ...prev, Location: val }))}
+              placeholder="Select your location / constituency"
+              districts={districts}
+            />
           </div>
 
           {isProfessional && (
@@ -145,13 +159,7 @@ const EditProfileModal = ({ isOpen, onClose, initialData, onSaveSuccess }) => {
       </div>
     </div>
     
-    {showLocationPicker && (
-      <LocationPickerModal 
-        isOpen={showLocationPicker} 
-        onClose={() => setShowLocationPicker(false)} 
-        onSelect={handleLocationSelect}
-      />
-    )}
+    {/* Removed LocationPickerModal in favor of direct constituency dropdown */}
     
     <AlertModal isOpen={showAlert} onClose={() => setShowAlert(false)} title={alertContent.title} message={alertContent.message} />
     </>

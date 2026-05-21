@@ -4,6 +4,7 @@ import ConfirmModal from '../components/ConfirmModal';
 import AlertModal from '../components/AlertModal';
 import '../components/Services.css';
 import { API_URL } from '../constants';
+import LocationSelect from '../components/LocationSelect';
 
 const ProfessionalsList = ({ category, onBack }) => {
   const [labours, setLabours] = useState([]);
@@ -11,6 +12,7 @@ const ProfessionalsList = ({ category, onBack }) => {
   // Search & Pagination State
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
+  const [districts, setDistricts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -134,6 +136,18 @@ const ProfessionalsList = ({ category, onBack }) => {
   // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchConstituencies = async () => {
+      try {
+        const response = await fetch(`${API_URL.replace('/skillLabour', '/alldiscons/alldiscons')}`);
+        if (response.ok) {
+          const data = await response.json();
+          setDistricts(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch constituencies:", err);
+      }
+    };
+    fetchConstituencies();
   }, []);
 
   // Debounced Search & Filter Effect
@@ -182,16 +196,13 @@ const ProfessionalsList = ({ category, onBack }) => {
           <p className="heading-subtitle">Find the best {category && category !== 'All' ? category : 'experts'} near you</p>
 
           {/* Search & Filters */}
-          <div className="search-filters glass-card">
-            <div className="location-box">
-              <MapPin size={18} style={{ color: 'var(--text-secondary)', marginRight: '0.5rem' }} />
-              <input
-                type="text"
-                placeholder="City or location..."
-                value={locationQuery}
-                onChange={(e) => setLocationQuery(e.target.value)}
-              />
-            </div>
+          <div className="search-filters glass-card" style={{ background: 'transparent', border: 'none', padding: 0, boxShadow: 'none' }}>
+            <LocationSelect
+              value={locationQuery}
+              onChange={setLocationQuery}
+              placeholder="Filter by city / location"
+              districts={districts}
+            />
           </div>
 
           {error && <p className="text-center" style={{ color: 'red', margin: '2rem 0' }}>{error}</p>}

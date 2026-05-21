@@ -1,0 +1,300 @@
+/* Custom Responsive Searchable Select Component Styles */
+
+.location-select-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Trigger Button Styles */
+.location-select-trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--surface-border, #cbd5e1);
+  background: var(--background, #ffffff);
+  color: var(--text-primary, #1e293b);
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.location-select-trigger:focus,
+.location-select-container.active .location-select-trigger {
+  border-color: var(--primary, #3b82f6);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  background: #ffffff;
+}
+
+.trigger-icon {
+  color: var(--primary, #3b82f6);
+  margin-right: 0.8rem;
+  flex-shrink: 0;
+}
+
+.trigger-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.trigger-text.placeholder {
+  color: var(--text-secondary, #64748b);
+  font-weight: 400;
+}
+
+/* Web Desktop Popover Styles */
+.location-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid var(--surface-border, #cbd5e1);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  z-index: 2100;
+  display: flex;
+  flex-direction: column;
+  max-height: 350px;
+  overflow: hidden;
+}
+
+.dropdown-search-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--surface-border, #f1f5f9);
+  background: #fafafa;
+}
+
+.dropdown-search-wrapper .search-icon {
+  color: var(--text-secondary, #64748b);
+  margin-right: 0.6rem;
+}
+
+.dropdown-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--text-primary, #1e293b);
+  font-size: 0.95rem;
+}
+
+.dropdown-options-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+.dropdown-group-header {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary, #3b82f6);
+  background: rgba(59, 130, 246, 0.04);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-group-header:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.dropdown-item {
+  padding: 0.65rem 1.8rem;
+  font-size: 0.95rem;
+  color: var(--text-primary, #334155);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: #f1f5f9;
+  padding-left: 2rem;
+}
+
+.dropdown-item.selected {
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--primary, #3b82f6);
+  font-weight: 600;
+}
+
+.no-options {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-secondary, #64748b);
+  font-size: 0.95rem;
+}
+
+/* Animations */
+.animate-popover {
+  animation: popoverFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top center;
+}
+
+@keyframes popoverFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile Bottom Sheet Styles */
+.bottom-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 999999;
+  animation: backdropFadeIn 0.25s ease-out forwards;
+}
+
+.bottom-sheet-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  z-index: 1000000;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+  animation: bottomSheetSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bottom-sheet-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.6rem 1rem 0.8rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.bottom-sheet-drag-handle {
+  width: 40px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-bottom: 0.8rem;
+}
+
+.bottom-sheet-header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.bottom-sheet-header-title h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-primary, #0f172a);
+  font-weight: 700;
+}
+
+.bottom-sheet-close {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.bottom-sheet-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.bottom-sheet-search-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: #fafafa;
+}
+
+.bottom-sheet-search-wrapper .search-icon {
+  color: var(--text-secondary, #64748b);
+  margin-right: 0.75rem;
+}
+
+.bottom-sheet-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--text-primary, #1e293b);
+  font-size: 1.05rem;
+  padding: 0.2rem 0;
+}
+
+.bottom-sheet-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0 2rem;
+}
+
+.bottom-sheet-group-header {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary, #3b82f6);
+  background: rgba(59, 130, 246, 0.04);
+  cursor: pointer;
+}
+
+.bottom-sheet-item {
+  padding: 0.85rem 2.25rem;
+  font-size: 1.05rem;
+  color: var(--text-primary, #334155);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.bottom-sheet-item:active {
+  background: #f1f5f9;
+}
+
+.bottom-sheet-item.selected {
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--primary, #3b82f6);
+  font-weight: 600;
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bottomSheetSlideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

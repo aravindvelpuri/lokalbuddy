@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import './RegisterModal.css';
 import { API_URL } from '../constants';
+import LocationSelect from './LocationSelect';
 
 
 const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Professional' }) => {
@@ -18,6 +19,7 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
   });
   
   const [availableSkills, setAvailableSkills] = useState([]);
+  const [districts, setDistricts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -39,6 +41,19 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
         }
       };
       fetchSkills();
+
+      const fetchConstituencies = async () => {
+        try {
+          const response = await fetch(`${API_URL.replace('/skillLabour', '/alldiscons/alldiscons')}`);
+          if (response.ok) {
+            const data = await response.json();
+            setDistricts(data);
+          }
+        } catch (err) {
+          console.error("Failed to fetch constituencies:", err);
+        }
+      };
+      fetchConstituencies();
       
       // Reset state when modal opens
       setError('');
@@ -242,14 +257,11 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
 
           <div className="form-group">
             <label htmlFor="Location">Location</label>
-            <input 
-              type="text" 
-              id="Location" 
-              name="Location" 
-              value={formData.Location} 
-              onChange={handleChange} 
-              required 
-              placeholder="e.g. Guntur, AP"
+            <LocationSelect
+              value={formData.Location}
+              onChange={(val) => setFormData(prev => ({ ...prev, Location: val }))}
+              placeholder="Select your location / constituency"
+              districts={districts}
             />
           </div>
 
