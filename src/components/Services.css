@@ -210,6 +210,8 @@
   align-items: center;
   padding: 1.5rem;
   margin-bottom: 2rem;
+  position: relative;
+  z-index: 50;
 }
 
 .search-box, .location-box {

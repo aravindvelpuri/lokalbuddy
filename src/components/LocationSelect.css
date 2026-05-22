@@ -5,6 +5,10 @@
   width: 100%;
 }
 
+.location-select-container.active {
+  z-index: 100;
+}
+
 /* Trigger Button Styles */
 .location-select-trigger {
   display: flex;

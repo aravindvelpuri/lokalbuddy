@@ -30,6 +30,27 @@ const getCategoryIcon = (categoryName) => {
   return <Briefcase size={28} className="text-primary" />;
 };
 
+const cleanCategories = (rawCategories) => {
+  const normalized = rawCategories.map(cat => {
+    if (!cat) return '';
+    let name = cat.trim();
+    
+    const lower = name.toLowerCase();
+    if (lower === 'test') return null;
+    
+    if (lower === 'carpenter' || lower === 'carpenters') return 'Carpenter';
+    if (lower === 'mason' || lower === 'masons') return 'Mason';
+    if (lower === 'plumber' || lower === 'plumbers') return 'Plumber';
+    if (lower === 'painter' || lower === 'painters') return 'Painter';
+    if (lower === 'tiler' || lower === 'tilers') return 'Tiler';
+    if (lower === 'electrician' || lower === 'electricians') return 'Electrician';
+    
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }).filter(Boolean);
+
+  return [...new Set(normalized)].sort((a, b) => a.localeCompare(b));
+};
+
 const Services = ({ onCategoryClick }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +65,7 @@ const Services = ({ onCategoryClick }) => {
         const catResult = await catResponse.json();
         if (catResult.success && catResult.data) {
           const allCatNames = catResult.data.map(cat => cat.name);
-          setCategories(allCatNames);
+          setCategories(cleanCategories(allCatNames));
         }
       } catch (err) {
         setError('Could not fetch categories.');

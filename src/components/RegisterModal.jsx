@@ -5,6 +5,27 @@ import { API_URL } from '../constants';
 import LocationSelect from './LocationSelect';
 
 
+const cleanCategories = (rawCategories) => {
+  const normalized = rawCategories.map(cat => {
+    if (!cat) return '';
+    let name = cat.trim();
+    
+    const lower = name.toLowerCase();
+    if (lower === 'test') return null;
+    
+    if (lower === 'carpenter' || lower === 'carpenters') return 'Carpenter';
+    if (lower === 'mason' || lower === 'masons') return 'Mason';
+    if (lower === 'plumber' || lower === 'plumbers') return 'Plumber';
+    if (lower === 'painter' || lower === 'painters') return 'Painter';
+    if (lower === 'tiler' || lower === 'tilers') return 'Tiler';
+    if (lower === 'electrician' || lower === 'electricians') return 'Electrician';
+    
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }).filter(Boolean);
+
+  return [...new Set(normalized)].sort((a, b) => a.localeCompare(b));
+};
+
 const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Professional' }) => {
   const [role, setRole] = useState(initialRole); // 'Professional' or 'Customer'
   const [formData, setFormData] = useState({
@@ -33,7 +54,7 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
           if (response.ok) {
             const result = await response.json();
             if (result.success && result.data) {
-              setAvailableSkills(result.data.map(s => s.name));
+              setAvailableSkills(cleanCategories(result.data.map(s => s.name)));
             }
           }
         } catch (err) {
