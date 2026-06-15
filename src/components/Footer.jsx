@@ -20,15 +20,7 @@ const Footer = ({ onRegisterClick, user }) => {
             <a href="#linkedin" className="social-icon"><FaLinkedin size={20} /></a>
           </div>
         </div>
-        
-        <div className="footer-links-group">
-          <h4>Platform</h4>
-          <a href="#browse">Browse Services</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#about">About Us</a>
-          <a href="#contact">Contact</a>
-        </div>
-        
+
         <div className="footer-links-group">
           <h4>For Users</h4>
           {!user && (
@@ -40,12 +32,18 @@ const Footer = ({ onRegisterClick, user }) => {
           <a href="#guidelines">Safety Guidelines</a>
           <a href="#faq">FAQ</a>
         </div>
-        
+
+        <div className="footer-links-group">
+          <h4>Platform</h4>
+          <a href="#about">About Us</a>
+          <a href="#contact">Contact</a>
+        </div>
+
         <div className="footer-cta">
           <h4>Join LoKal Buddy Today</h4>
           <p>Get started with finding trusted professionals near you.</p>
           {!user ? (
-            <button 
+            <button
               className="button button-primary"
               onClick={() => onRegisterClick()}
             >
@@ -56,7 +54,7 @@ const Footer = ({ onRegisterClick, user }) => {
           )}
         </div>
       </div>
-      
+
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} LoKal Buddy. All rights reserved.</p>
       </div>

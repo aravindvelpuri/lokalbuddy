@@ -124,11 +124,6 @@ const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileC
         <>
           <Hero onRegisterClick={openRegister} user={currentUser} />
           <Services key={`services-${currentUser?._id || 'guest'}`} onCategoryClick={onCategoryClick} />
-          <HowItWorks />
-          {(!currentUser || !isSubscribed) && (
-            <Pricing onRegisterClick={openRegister} user={currentUser} />
-          )}
-          <Suppliers key={`suppliers-${currentUser?._id || 'guest'}`} isSubscribed={isSubscribed} />
           <Testimonials />
         </>
       ) : (

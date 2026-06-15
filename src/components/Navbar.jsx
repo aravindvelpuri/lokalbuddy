@@ -23,38 +23,37 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
 
         <nav className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
           <a href="#services" onClick={() => setMobileMenuOpen(false)}>Browse Skills</a>
-          <a href="#suppliers" onClick={() => setMobileMenuOpen(false)}>Suppliers</a>
           <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
           <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
-          
+
           <div className="mobile-nav-actions" style={{ flexDirection: 'column', gap: '1rem', marginTop: '2rem', alignItems: 'center', width: '100%', padding: '0 2rem' }}>
             {user ? (
-               <>
-                  <span className="user-name" style={{ marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>
-                    <UserIcon size={18} style={{ marginRight: '0.5rem' }} />
-                    Hi, {user.FullName.split(' ')[0]}
-                  </span>
-                  <button className="profile-link-btn" style={{ margin: 0, width: '100%' }} onClick={() => { onProfileClick(); setMobileMenuOpen(false); }}>Profile</button>
-                  <button className="profile-link-btn" style={{ margin: 0, width: '100%', backgroundColor: '#ef4444' }} onClick={() => { onLogout(); setMobileMenuOpen(false); }}>Logout</button>
-               </>
+              <>
+                <span className="user-name" style={{ marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>
+                  <UserIcon size={18} style={{ marginRight: '0.5rem' }} />
+                  Hi, {user.FullName.split(' ')[0]}
+                </span>
+                <button className="profile-link-btn" style={{ margin: 0, width: '100%' }} onClick={() => { onProfileClick(); setMobileMenuOpen(false); }}>Profile</button>
+                <button className="profile-link-btn" style={{ margin: 0, width: '100%', backgroundColor: '#ef4444' }} onClick={() => { onLogout(); setMobileMenuOpen(false); }}>Logout</button>
+              </>
             ) : (
-                <>
-                  <button className="signin-link" onClick={() => { onSignInClick(); setMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontWeight: 500, cursor: 'pointer', color: 'var(--text-secondary)' }}>Sign In</button>
-                  <button className="button button-primary" onClick={() => { onRegisterClick(); setMobileMenuOpen(false); }}>Join as Skilled User</button>
-                </>
+              <>
+                <button className="signin-link" onClick={() => { onSignInClick(); setMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontWeight: 500, cursor: 'pointer', color: 'var(--text-secondary)' }}>Sign In</button>
+                <button className="button button-primary" onClick={() => { onRegisterClick(); setMobileMenuOpen(false); }}>Join as Skilled User</button>
+              </>
             )}
           </div>
         </nav>
 
         <div className="nav-actions">
-           {user ? (
+          {user ? (
             <div className="user-profile desktop-nav-actions">
               <span className="user-name">
                 <UserIcon size={18} style={{ marginRight: '0.5rem' }} />
                 Hi, {user.FullName.split(' ')[0]}
               </span>
-              <button 
-                className="profile-link-btn" 
+              <button
+                className="profile-link-btn"
                 onClick={onProfileClick}
                 title="My Profile"
               >
@@ -66,8 +65,8 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
             </div>
           ) : (
             <div className="desktop-nav-actions" style={{ alignItems: 'center' }}>
-              <button 
-                className="signin-link" 
+              <button
+                className="signin-link"
                 onClick={onSignInClick}
                 style={{ background: 'none', border: 'none', marginRight: '1.5rem', fontWeight: 500, cursor: 'pointer' }}
               >
@@ -76,7 +75,7 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
               <button className="button button-primary" onClick={onRegisterClick}>Join as Skilled User</button>
             </div>
           )}
-          <button 
+          <button
             className="mobile-menu-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
