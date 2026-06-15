@@ -114,3 +114,8 @@
     border-radius: 10px;
   }
 }
+
+/* Reduce top padding of the Testimonials section container */
+.testimonials .section-container {
+  padding-top: 2rem;
+}

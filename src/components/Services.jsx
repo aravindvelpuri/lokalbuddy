@@ -112,7 +112,7 @@ const Services = ({ onCategoryClick }) => {
             </div>
 
             {!showAll && categories.length > displayCount && (
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
                 <button 
                   className="button button-outline" 
                   onClick={() => setShowAll(true)}

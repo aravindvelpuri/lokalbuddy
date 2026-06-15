@@ -11,7 +11,7 @@ const ProfessionalsList = ({ category, onBack }) => {
 
   // Search & Pagination State
   const [searchQuery, setSearchQuery] = useState('');
-  const [locationQuery, setLocationQuery] = useState('');
+  const [locationQuery, setLocationQuery] = useState(() => localStorage.getItem('selectedCity') || '');
   const [districts, setDistricts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -155,6 +155,7 @@ const ProfessionalsList = ({ category, onBack }) => {
     const timeoutId = setTimeout(() => {
       setPage(1);
       fetchData(1, false);
+      window.scrollTo(0, 0); // Reset scroll to top when category or filters change
     }, 400); // 400ms debounce
 
     return () => clearTimeout(timeoutId);
@@ -181,19 +182,21 @@ const ProfessionalsList = ({ category, onBack }) => {
   return (
     <div className="page-container" style={{ paddingTop: '80px', minHeight: '100vh', background: 'var(--bg)' }}>
       <section className="services" style={{ background: 'transparent' }}>
-        <div className="section-container">
-          <button
-            className="button button-outline"
-            onClick={onBack}
-            style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content' }}
-          >
-            <ArrowLeft size={18} /> Back
-          </button>
-
-          <h2 className="heading-title">
-            <span className="text-primary">{category && category !== 'All' ? category : 'All'}</span> Professionals
-          </h2>
-          <p className="heading-subtitle">Find the best {category && category !== 'All' ? category : 'experts'} near you</p>
+        <div className="section-container" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
+          <div className="professionals-header">
+            <button
+              className="button button-outline back-button-float"
+              onClick={onBack}
+            >
+              <ArrowLeft size={18} /> Back
+            </button>
+            <div className="professionals-title-wrapper">
+              <h2 className="heading-title">
+                <span className="text-primary">{category && category !== 'All' ? category : 'All'}</span> Professionals
+              </h2>
+              <p className="heading-subtitle">Find the best {category && category !== 'All' ? category : 'experts'} near you</p>
+            </div>
+          </div>
 
           {/* Search & Filters */}
           <div className="search-filters glass-card" style={{ background: 'transparent', border: 'none', padding: 0, boxShadow: 'none' }}>

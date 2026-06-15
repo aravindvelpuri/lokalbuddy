@@ -17,7 +17,8 @@ import AlertModal from '../components/AlertModal';
 import { API_URL } from '../constants';
 
 
-const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileClick, onCategoryClick, onBack }) => {
+const LandingPage = ({ view = 'home', selectedCategory, selectedCity, onCityChange, onCityClick, onAdminClick, onProfileClick, onCategoryClick, onBack }) => {
+  console.log("LandingPage render: view =", view, "onCategoryClick =", typeof onCategoryClick, "selectedCity =", selectedCity);
   const [currentUser, setCurrentUser] = useState(null);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [registrationRole, setRegistrationRole] = useState('Professional');
@@ -169,6 +170,9 @@ const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileC
         onLogout={handleLogout}
         onAdminClick={onAdminClick}
         onProfileClick={onProfileClick}
+        onCategoryClick={onCategoryClick}
+        selectedCity={selectedCity}
+        onCityClick={onCityClick}
       />
 
       <LoginModal
@@ -199,6 +203,8 @@ const LandingPage = ({ view = 'home', selectedCategory, onAdminClick, onProfileC
             onConnect={handleConnect} 
             currentUser={currentUser} 
             onViewAll={() => onCategoryClick('All')} 
+            selectedCity={selectedCity}
+            onCityChange={onCityChange}
           />
           <Services key={`services-${currentUser?._id || 'guest'}`} onCategoryClick={onCategoryClick} />
           <Testimonials />

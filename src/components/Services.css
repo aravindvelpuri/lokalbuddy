@@ -136,7 +136,8 @@
   margin-top: auto;
 }
 
-.badge-unverified, .badge-verified {
+.badge-unverified,
+.badge-verified {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
@@ -172,8 +173,13 @@
 
 /* Animations and Search Filters */
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spin {
@@ -181,8 +187,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .skeleton-card {
@@ -192,7 +205,8 @@
   transform: none !important;
 }
 
-.search-box:focus-within, .location-box:focus-within {
+.search-box:focus-within,
+.location-box:focus-within {
   border-color: var(--primary) !important;
   box-shadow: 0 0 0 2px rgba(225, 26, 91, 0.1);
 }
@@ -214,7 +228,8 @@
   z-index: 50;
 }
 
-.search-box, .location-box {
+.search-box,
+.location-box {
   flex: 1;
   min-width: 200px;
   display: flex;
@@ -226,7 +241,8 @@
   transition: all 0.3s ease;
 }
 
-.search-box input, .location-box input {
+.search-box input,
+.location-box input {
   border: none;
   background: transparent;
   width: 100%;
@@ -260,7 +276,7 @@
     font-size: 1.75rem !important;
     padding: 0 1rem;
   }
-  
+
   .heading-subtitle {
     font-size: 1rem !important;
     margin-bottom: 1.5rem;
@@ -273,7 +289,9 @@
     margin-bottom: 1.5rem;
   }
 
-  .search-box, .location-box, .category-select {
+  .search-box,
+  .location-box,
+  .category-select {
     width: 100%;
     min-width: unset;
   }
@@ -344,7 +362,7 @@
 .category-card:hover {
   transform: translateY(-5px);
   border-color: var(--primary);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
 .category-icon-wrapper {
@@ -364,4 +382,92 @@
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+}
+
+/* Professionals Page Header Layout */
+.professionals-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.back-button-float {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--surface-border) !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.back-button-float:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  transform: translateY(-50%) scale(1.02);
+}
+
+.professionals-title-wrapper {
+  text-align: center;
+}
+
+.professionals-title-wrapper .heading-title {
+  margin-bottom: 0.5rem;
+}
+
+.professionals-title-wrapper .heading-subtitle {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .professionals-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-button-float {
+    position: static;
+    transform: none !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .back-button-float:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  .professionals-title-wrapper {
+    text-align: left;
+  }
+
+  .professionals-title-wrapper .heading-title {
+    text-align: left;
+    font-size: 1.75rem;
+    padding: 0;
+  }
+
+  .professionals-title-wrapper .heading-subtitle {
+    text-align: left;
+    font-size: 1rem;
+  }
+}
+
+/* Reduce top and bottom padding of the Explore Professions section container */
+.services .section-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }

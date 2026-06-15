@@ -1,7 +1,7 @@
 /* NearestProfessionals.css */
 
 .nearest-section {
-  padding: 5rem 2rem 3rem;
+  padding: 5rem 2rem 1.5rem;
   background: var(--surface);
   position: relative;
   overflow: hidden;
@@ -53,6 +53,8 @@
   gap: 1.25rem;
   align-items: center;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 110;
 }
 
 .filter-bar-glass:hover {
@@ -347,8 +349,13 @@
 
 /* Spinner animation */
 @keyframes spin-loader {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .spin-loader {
@@ -359,7 +366,7 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .nearest-section {
-    padding: 3rem 1rem 2rem;
+    padding: 3rem 1rem 1rem;
   }
 
   .filter-bar-glass {

@@ -22,6 +22,8 @@ function App() {
     return 'All';
   });
 
+  const [selectedCity, setSelectedCity] = useState(() => localStorage.getItem('selectedCity') || '');
+
   // Sync URL with view changes
   const navigate = (newView, params = null) => {
     if (newView === 'admin') {
@@ -36,6 +38,31 @@ function App() {
       setSelectedCategory(params?.category || 'All');
     }
     setView(newView);
+  };
+
+  const handleCityChange = (city) => {
+    localStorage.setItem('selectedCity', city);
+    setSelectedCity(city);
+  };
+
+  const handleCityClickFromNavbar = (city) => {
+    localStorage.setItem('selectedCity', city);
+    setSelectedCity(city);
+    
+    if (view !== 'home') {
+      navigate('home');
+      setTimeout(() => {
+        const nearestSection = document.querySelector('.nearest-section');
+        if (nearestSection) {
+          nearestSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else {
+      const nearestSection = document.querySelector('.nearest-section');
+      if (nearestSection) {
+        nearestSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   // Handle browser back/forward buttons
@@ -60,6 +87,9 @@ function App() {
         <LandingPage 
           view={view}
           selectedCategory={selectedCategory}
+          selectedCity={selectedCity}
+          onCityChange={handleCityChange}
+          onCityClick={handleCityClickFromNavbar}
           onAdminClick={() => navigate('admin')} 
           onProfileClick={() => navigate('profile')}
           onCategoryClick={(cat) => navigate('professionals', { category: cat })}

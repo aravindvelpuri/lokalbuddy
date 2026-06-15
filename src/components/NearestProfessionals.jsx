@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Search, 
-  MapPin, 
-  Navigation, 
-  User, 
-  ShieldCheck, 
-  Lock, 
-  Phone, 
-  RefreshCw, 
+import {
+  Search,
+  MapPin,
+  Navigation,
+  User,
+  ShieldCheck,
+  Lock,
+  Phone,
+  RefreshCw,
   AlertCircle,
   ChevronRight
 } from 'lucide-react';
@@ -15,13 +15,20 @@ import LocationSelect from './LocationSelect';
 import './NearestProfessionals.css';
 import { API_URL } from '../constants';
 
-const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
+const NearestProfessionals = ({ onConnect, currentUser, onViewAll, selectedCity, onCityChange }) => {
   const [labours, setLabours] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [districts, setDistricts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  // Sync selectedCity prop to local locationQuery state
+  useEffect(() => {
+    if (selectedCity !== undefined) {
+      setLocationQuery(selectedCity);
+    }
+  }, [selectedCity]);
 
   // Geolocation and auto-detection states
   const [isDetecting, setIsDetecting] = useState(false);
@@ -79,7 +86,7 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
                 // Look for matches in the districts list
                 let matchedConstituency = '';
                 for (const dist of districts) {
-                  const isParlMatch = placeNames.some(pName => 
+                  const isParlMatch = placeNames.some(pName =>
                     dist.parliament.toLowerCase().includes(pName) || pName.includes(dist.parliament.toLowerCase())
                   );
 
@@ -88,8 +95,8 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
                     break;
                   }
 
-                  const matchingAssembly = dist.assemblies.find(assembly => 
-                    placeNames.some(pName => 
+                  const matchingAssembly = dist.assemblies.find(assembly =>
+                    placeNames.some(pName =>
                       assembly.name.toLowerCase().includes(pName) || pName.includes(assembly.name.toLowerCase())
                     )
                   );
@@ -102,6 +109,9 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
 
                 if (matchedConstituency) {
                   setLocationQuery(matchedConstituency);
+                  if (onCityChange) {
+                    onCityChange(matchedConstituency);
+                  }
                 } else if (!isAuto) {
                   alert(`Detected: "${displayPlace}". No exact matching Bihar constituency found. Please select from the dropdown.`);
                 }
@@ -138,7 +148,7 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
           console.error(e);
         }
       }
-      
+
       if (userLoc) {
         setLocationQuery(userLoc);
       } else {
@@ -174,7 +184,7 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
       const response = await fetch(`${API_URL}/unified-list?${queryParams.toString()}`, {
         headers: token ? { 'token': token } : {}
       });
-      
+
       if (response.ok) {
         const result = await response.json();
         const allLabours = result.data || [];
@@ -229,23 +239,28 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
         <div className="filter-bar-glass">
           <div className="search-input-wrapper">
             <Search size={18} className="search-icon-color" />
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Search by name, skill, or service..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          <LocationSelect 
+          <LocationSelect
             value={locationQuery}
-            onChange={setLocationQuery}
+            onChange={(val) => {
+              setLocationQuery(val);
+              if (onCityChange) {
+                onCityChange(val);
+              }
+            }}
             placeholder="Select location / constituency"
             districts={districts}
           />
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="locate-btn"
             onClick={handleExplicitDetect}
             disabled={isDetecting}
@@ -308,7 +323,7 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
 
                 <h3 className="card-pro-name">{labour.FullName}</h3>
                 <span className="card-pro-skill">{labour.SelectSkill}</span>
-                
+
                 <div className="card-pro-location">
                   <MapPin size={14} className="text-primary" /> {labour.Location}
                 </div>
@@ -355,8 +370,8 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll }) => {
 
         {/* View All Button */}
         {!loading && labours.length > 0 && (
-          <div className="view-all-wrapper" style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
-            <button 
+          <div className="view-all-wrapper" style={{ display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
+            <button
               className="button button-outline"
               onClick={onViewAll}
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 2.5rem', fontWeight: '700' }}
