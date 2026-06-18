@@ -242,7 +242,8 @@
 /* Responsive Grid and Stacking */
 @media (max-width: 991px) {
   .hero-redesigned {
-    padding: 95px 0 115px; /* Leave space for sticky header and floating badges at the bottom */
+    padding: 80px 0 0px;
+    /* Reduced paddings to bring the bottom CTA and ETA badges closer */
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 255, 255, 0.92) 100%), url('/mobile_hero_bg.png') no-repeat center center / cover;
     position: relative;
   }
@@ -274,6 +275,7 @@
       box-shadow: 0 4px 12px rgba(225, 26, 91, 0.04);
       border-color: rgba(225, 26, 91, 0.15);
     }
+
     100% {
       box-shadow: 0 4px 16px rgba(225, 26, 91, 0.12);
       border-color: rgba(225, 26, 91, 0.35);
@@ -373,12 +375,14 @@
   }
 
   .hero-model-frame {
-    display: none; /* Hide foreground expert image container */
+    display: none;
+    /* Hide foreground expert image container */
   }
 
   .floating-badge-rating {
     position: absolute;
-    top: 6.2rem; /* Sits cleanly below the mobile header */
+    top: 6.2rem;
+    /* Sits cleanly below the mobile header */
     right: 1rem;
     padding: 0.4rem 0.9rem;
     font-size: 0.8rem;
@@ -392,7 +396,8 @@
     position: absolute;
     bottom: 1.5rem;
     left: 50%;
-    transform: translateX(-50%); /* Center horizontally at the bottom of the section */
+    transform: translateX(-50%);
+    /* Center horizontally at the bottom of the section */
     padding: 0.65rem 1rem;
     width: 90%;
     max-width: 310px;
