@@ -383,11 +383,117 @@
   }
 
   .nearest-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, 1fr) !important; /* Show exactly 2 cards in a row */
+    gap: 0.65rem !important;
   }
 
   .nearest-card {
-    padding: 2rem 1.25rem;
+    padding: 1.25rem 0.65rem !important;
+    border-radius: 16px !important;
+    min-height: auto !important;
+  }
+
+  .card-top-tag {
+    position: static !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .card-top-tag-verified,
+  .card-top-tag-community {
+    font-size: 0.55rem !important;
+    padding: 0.2rem 0.4rem !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .card-pro-avatar {
+    width: 54px !important;
+    height: 54px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+    border-width: 2px !important;
+  }
+
+  .card-pro-avatar svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .card-pro-name {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.25rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+  }
+
+  .card-pro-skill {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.5rem !important;
+    margin-bottom: 0.4rem !important;
+    border-radius: 5px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+  }
+
+  .card-pro-location {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.4rem !important;
+    gap: 0.2rem !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+  }
+
+  .card-pro-location svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .pro-phone {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.2rem !important;
+  }
+
+  .pro-phone svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .card-pro-desc {
+    display: none !important; /* Hide long description to preserve vertical space in compact grid layout */
+  }
+
+  .card-pro-contact-btn {
+    padding: 0.6rem 0.4rem !important;
+    font-size: 0.725rem !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+  }
+
+  .status-pill-info {
+    display: inline-block !important; /* Clean word-wrapping instead of flexing line-break */
+    text-align: center;
+    max-width: 100%;
+    line-height: 1.5;
+    padding: 0.6rem 1.25rem;
+    border-radius: 16px;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  .status-pill-info svg {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 4px;
   }
 }
