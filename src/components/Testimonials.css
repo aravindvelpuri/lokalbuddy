@@ -123,7 +123,7 @@
 @media (max-width: 768px) {
   .testimonials .section-container {
     padding-top: 1.5rem !important;
-    padding-bottom: 0rem !important;
+    padding-bottom: 2rem !important;
     /* Shrunk from 5rem (80px) to reduce empty bottom gap on mobile */
   }
 }
