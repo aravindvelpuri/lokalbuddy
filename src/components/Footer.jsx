@@ -8,7 +8,7 @@ const Footer = ({ onRegisterClick, user }) => {
       <div className="section-container footer-content">
         <div className="footer-brand">
           <div className="logo footer-logo">
-            <img src="/logo.jpeg" alt="LoKal Buddy Logo" className="logo-image" style={{ height: '50px' }} />
+            <img src="/logo.png" alt="LoKal Buddy Logo" className="logo-image" style={{ height: '50px' }} />
           </div>
           <p className="footer-desc">
             Your trusted local platform to find verified service professionals. Get your tasks done effortlessly.

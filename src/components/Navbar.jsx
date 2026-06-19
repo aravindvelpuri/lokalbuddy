@@ -126,7 +126,7 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="logo" onClick={() => window.location.href = '/'}>
-          <img src="/logo.jpeg" alt="LoKal Buddy Logo" className="logo-image" />
+          <img src="/logo.png" alt="LoKal Buddy Logo" className="logo-image" />
         </div>
 
         <nav className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
