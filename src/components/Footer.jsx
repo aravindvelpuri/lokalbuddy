@@ -56,7 +56,7 @@ const Footer = ({ onRegisterClick, user }) => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} LoKal Buddy. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} LoKal Buddy. Powered by Wealth Associates. Developed by Kriya IT Solutions. All rights reserved.</p>
       </div>
     </footer>
   );
