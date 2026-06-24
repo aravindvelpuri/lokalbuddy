@@ -19,7 +19,7 @@ const Hero = ({ onRegisterClick, user }) => {
   return (
     <section id="home" className="hero-redesigned">
       <div className="hero-container section-container">
-        
+
         {/* Left Column: Hero Content */}
         <div className="hero-left animate-fade-in">
           <div className="trusted-badge">
@@ -52,11 +52,11 @@ const Hero = ({ onRegisterClick, user }) => {
           </div>
 
           <div className="hero-action-buttons">
-            <button 
+            <button
               className="button hero-cta-btn"
               onClick={handleHeroAction}
             >
-              {user ? 'Find Nearest Experts' : 'Join as Skilled User'}
+              {user ? 'Find Nearest Experts' : 'Join as Skilled Resource'}
             </button>
           </div>
         </div>

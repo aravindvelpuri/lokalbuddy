@@ -7,28 +7,44 @@ const cleanCategories = (rawCategories) => {
   const normalized = rawCategories.map(cat => {
     if (!cat) return '';
     let name = cat.trim();
-    
+
     const lower = name.toLowerCase();
     if (lower === 'test') return null;
-    
+
     if (lower === 'carpenter' || lower === 'carpenters') return 'Carpenter';
     if (lower === 'mason' || lower === 'masons') return 'Mason';
     if (lower === 'plumber' || lower === 'plumbers') return 'Plumber';
     if (lower === 'painter' || lower === 'painters') return 'Painter';
     if (lower === 'tiler' || lower === 'tilers') return 'Tiler';
     if (lower === 'electrician' || lower === 'electricians') return 'Electrician';
-    
+
     return name.charAt(0).toUpperCase() + name.slice(1);
   }).filter(Boolean);
 
   return [...new Set(normalized)].sort((a, b) => a.localeCompare(b));
 };
 
+const POPULAR_SKILLS = [
+  'AC Repair & Service',
+  'Appliance Repair',
+  'Beauty & Salon',
+  'Carpenter',
+  'Cleaning & Deep Cleaning',
+  'Electrician',
+  'Furniture Assembly',
+  'Gardening & Lawn Care',
+  'Mason',
+  'Painter',
+  'Pest Control',
+  'Plumber',
+  'Tiler'
+];
+
 const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, onProfileClick, onCategoryClick, selectedCity, onCityClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'services' or 'cities' on mobile
-  
+
   // Dynamic links list states
   const [dynamicSkills, setDynamicSkills] = useState([]);
   const [dynamicCities, setDynamicCities] = useState([]);
@@ -110,29 +126,102 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
     setServiceSearchQuery('');
   };
 
-  // Fallback defaults if APIs are loading or fail
-  const displaySkills = dynamicSkills.length > 0 ? dynamicSkills : ['Plumber', 'Electrician', 'Carpenter', 'Mason', 'Painter', 'Tiler'];
+  // Combine popular search options with dynamic skills from database
+  const displaySkills = [...new Set([...POPULAR_SKILLS, ...dynamicSkills])].sort((a, b) => a.localeCompare(b));
   const displayCities = dynamicCities.length > 0 ? dynamicCities : ['Patna Sahib', 'Gaya', 'Muzaffarpur', 'Bhagalpur'];
 
-  const filteredCities = displayCities.filter(city => 
+  const filteredCities = displayCities.filter(city =>
     city.toLowerCase().includes(citySearchQuery.toLowerCase())
   );
 
-  const filteredSkills = displaySkills.filter(skill => 
+  const filteredSkills = displaySkills.filter(skill =>
     skill.toLowerCase().includes(serviceSearchQuery.toLowerCase())
   );
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <div className="logo" onClick={() => window.location.href = '/'}>
-          <img src="/logo.png" alt="LoKal Buddy Logo" className="logo-image" />
+        <div className="logo-container">
+          <div className="logo" onClick={() => window.location.href = '/'}>
+            <img src="/logo.png" alt="LoKal Buddy Logo" className="logo-image" />
+          </div>
+
+          {/* Cities Dropdown (Desktop) */}
+          <div
+            className={`nav-item-dropdown desktop-location-dropdown ${activeDropdown === 'cities' ? 'active' : ''}`}
+            onMouseLeave={(e) => {
+              if (window.innerWidth >= 992) {
+                if (!e.currentTarget.contains(document.activeElement)) {
+                  setCitySearchQuery('');
+                }
+              }
+            }}
+            onBlur={(e) => {
+              if (window.innerWidth >= 992 && (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget))) {
+                setCitySearchQuery('');
+              }
+            }}
+          >
+            <span className="nav-link-with-arrow" onClick={() => handleDropdownToggle('cities')}>
+              <MapPin size={14} className="city-pin-icon" style={{ marginRight: '4px', opacity: 0.8 }} />
+              {selectedCity || 'Cities'} <ChevronDown size={14} className="dropdown-arrow-icon" />
+            </span>
+            <div className="dropdown-menu-card cities-dropdown-menu">
+              <div className="cities-search-wrapper">
+                <Search size={14} className="cities-search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search city..."
+                  value={citySearchQuery}
+                  onChange={(e) => setCitySearchQuery(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                {citySearchQuery && (
+                  <button
+                    type="button"
+                    className="clear-search-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCitySearchQuery('');
+                    }}
+                    style={{ background: 'none', border: 'none', padding: 0, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  >
+                    <X size={14} className="cities-clear-icon" />
+                  </button>
+                )}
+              </div>
+              <div className="cities-list-scroll">
+                {filteredCities.map(city => (
+                  <a
+                    key={city}
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      console.log("Navbar: Clicked city link:", city);
+                      if (onCityClick) {
+                        onCityClick(city);
+                      }
+                      setMobileMenuOpen(false);
+                      setActiveDropdown(null);
+                      setCitySearchQuery('');
+                      e.currentTarget.blur();
+                    }}
+                  >
+                    {city}
+                  </a>
+                ))}
+                {filteredCities.length === 0 && (
+                  <span className="no-cities-found">No cities found</span>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
 
         <nav className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
           {/* Services Dropdown */}
-          <div 
-            className={`nav-item-dropdown ${activeDropdown === 'services' ? 'active' : ''}`}
+          <div
+            className={`nav-item-dropdown services-dropdown-parent ${activeDropdown === 'services' ? 'active' : ''}`}
             onMouseLeave={(e) => {
               if (window.innerWidth >= 992) {
                 if (!e.currentTarget.contains(document.activeElement)) {
@@ -152,9 +241,9 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
             <div className="dropdown-menu-card services-dropdown-menu">
               <div className="services-search-wrapper">
                 <Search size={14} className="services-search-icon" />
-                <input 
-                  type="text" 
-                  placeholder="Search service..." 
+                <input
+                  type="text"
+                  placeholder="Search service..."
                   value={serviceSearchQuery}
                   onChange={(e) => setServiceSearchQuery(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
@@ -175,9 +264,9 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
               </div>
               <div className="services-list-scroll">
                 {filteredSkills.map(skill => (
-                  <a 
-                    key={skill} 
-                    href={`/professionals?category=${encodeURIComponent(skill)}`} 
+                  <a
+                    key={skill}
+                    href={`/professionals?category=${encodeURIComponent(skill)}`}
                     onClick={(e) => {
                       e.preventDefault();
                       console.log("Navbar: Clicked skill link:", skill);
@@ -203,8 +292,8 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
           </div>
 
           {/* Cities Dropdown */}
-          <div 
-            className={`nav-item-dropdown ${activeDropdown === 'cities' ? 'active' : ''}`}
+          <div
+            className={`nav-item-dropdown mobile-location-dropdown ${activeDropdown === 'cities' ? 'active' : ''}`}
             onMouseLeave={(e) => {
               if (window.innerWidth >= 992) {
                 if (!e.currentTarget.contains(document.activeElement)) {
@@ -225,9 +314,9 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
             <div className="dropdown-menu-card cities-dropdown-menu">
               <div className="cities-search-wrapper">
                 <Search size={14} className="cities-search-icon" />
-                <input 
-                  type="text" 
-                  placeholder="Search city..." 
+                <input
+                  type="text"
+                  placeholder="Search city..."
                   value={citySearchQuery}
                   onChange={(e) => setCitySearchQuery(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
@@ -248,9 +337,9 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
               </div>
               <div className="cities-list-scroll">
                 {filteredCities.map(city => (
-                  <a 
-                    key={city} 
-                    href="#" 
+                  <a
+                    key={city}
+                    href="#"
                     onClick={(e) => {
                       e.preventDefault();
                       console.log("Navbar: Clicked city link:", city);
@@ -289,7 +378,7 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
             ) : (
               <>
                 <button className="signin-link" onClick={() => { onSignInClick(); setMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontWeight: 600, cursor: 'pointer', color: 'var(--text-secondary)' }}>Sign In</button>
-                <button className="button button-primary" onClick={() => { onRegisterClick(); setMobileMenuOpen(false); }}>Join as Skilled User</button>
+                <button className="button button-primary" onClick={() => { onRegisterClick(); setMobileMenuOpen(false); }}>Join as Skilled Resource</button>
               </>
             )}
           </div>
@@ -324,7 +413,7 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
               >
                 Sign In
               </button>
-              <button className="button button-primary" onClick={onRegisterClick}>Join as Skilled User</button>
+              <button className="button button-primary" onClick={onRegisterClick}>Join as Skilled Resource</button>
             </div>
           )}
           <button
