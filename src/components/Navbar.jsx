@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, LogOut, User as UserIcon, ChevronDown, MapPin, Search } from 'lucide-react';
+import { Menu, X, LogOut, User as UserIcon, ChevronDown, Search } from 'lucide-react';
 import './Navbar.css';
 import { API_URL } from '../constants';
 
@@ -163,7 +163,6 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
             }}
           >
             <span className="nav-link-with-arrow" onClick={() => handleDropdownToggle('cities')}>
-              <MapPin size={14} className="city-pin-icon" style={{ marginRight: '4px', opacity: 0.8 }} />
               {selectedCity || 'Cities'} <ChevronDown size={14} className="dropdown-arrow-icon" />
             </span>
             <div className="dropdown-menu-card cities-dropdown-menu">
@@ -308,7 +307,6 @@ const Navbar = ({ onRegisterClick, onSignInClick, user, onLogout, onAdminClick, 
             }}
           >
             <span className="nav-link-with-arrow" onClick={() => handleDropdownToggle('cities')}>
-              <MapPin size={14} className="city-pin-icon" style={{ marginRight: '4px', opacity: 0.8 }} />
               {selectedCity || 'Cities'} <ChevronDown size={14} className="dropdown-arrow-icon" />
             </span>
             <div className="dropdown-menu-card cities-dropdown-menu">
