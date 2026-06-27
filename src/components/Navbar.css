@@ -405,7 +405,8 @@
 /* Cities and Services Dropdown Card Styling */
 .cities-dropdown-menu,
 .services-dropdown-menu {
-  min-width: 210px !important;
+  min-width: 340px !important;
+  max-width: 400px;
 }
 
 /* Search wrapper inside dropdown */
@@ -446,13 +447,40 @@
 }
 
 .cities-list-scroll {
-  max-height: 180px;
+  max-height: 240px;
   overflow-y: auto;
   scrollbar-width: thin;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  padding-right: 2px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 0.25rem 2px 0.25rem 0;
+}
+
+.cities-list-scroll a {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.65rem 0.5rem !important;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  transition: all 0.2s ease;
+}
+
+.cities-list-scroll a:hover {
+  background: rgba(225, 26, 91, 0.08) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  transform: translateY(-1px);
+}
+
+.cities-list-scroll .no-cities-found {
+  grid-column: span 2;
+  padding: 1rem 0;
 }
 
 .services-list-scroll {
@@ -492,11 +520,6 @@
   padding: 1rem 0;
 }
 
-.services-dropdown-menu {
-  min-width: 340px !important;
-  max-width: 400px;
-}
-
 @media (min-width: 992px) {
   .services-dropdown-parent {
     position: static !important;
@@ -524,22 +547,41 @@
     transform: translateY(0) !important;
   }
 
-  .services-list-scroll {
+  .desktop-location-dropdown .cities-dropdown-menu {
+    width: auto !important;
+    min-width: 850px !important;
+    max-width: 900px !important;
+    padding: 1.5rem !important;
+    gap: 1rem !important;
+    left: 0 !important;
+    transform: translateX(0) translateY(10px) !important;
+  }
+
+  .desktop-location-dropdown:hover .cities-dropdown-menu,
+  .desktop-location-dropdown:focus-within .cities-dropdown-menu {
+    transform: translateX(0) translateY(0) !important;
+  }
+
+  .services-list-scroll,
+  .cities-list-scroll {
     grid-template-columns: repeat(6, 1fr) !important;
     max-height: 350px !important;
     gap: 0.75rem !important;
     padding: 0.25rem 6px 0.25rem 0 !important;
   }
 
-  .services-list-scroll a {
+  .services-list-scroll a,
+  .cities-list-scroll a {
     padding: 0.8rem 0.5rem !important;
   }
 
-  .services-list-scroll .no-services-found {
+  .services-list-scroll .no-services-found,
+  .cities-list-scroll .no-cities-found {
     grid-column: span 6 !important;
   }
 
-  .services-dropdown-menu .services-search-wrapper {
+  .services-dropdown-menu .services-search-wrapper,
+  .cities-dropdown-menu .cities-search-wrapper {
     margin-bottom: 0 !important;
   }
 }
