@@ -11,7 +11,7 @@ const Footer = ({ onRegisterClick, user }) => {
             <img src="/logo.png" alt="LoKal Buddy Logo" className="logo-image" style={{ height: '50px' }} />
           </div>
           <p className="footer-desc">
-            Your trusted local platform to find verified service professionals. Get your tasks done effortlessly.
+            Your trusted lokal platform to find verified service professionals. Get your tasks done effortlessly.
           </p>
           <div className="social-links">
             <a href="#facebook" className="social-icon"><FaFacebook size={20} /></a>

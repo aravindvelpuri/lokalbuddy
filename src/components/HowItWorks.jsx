@@ -6,7 +6,7 @@ const steps = [
   {
     icon: <Search size={32} />,
     title: 'Search Services',
-    description: 'Find the right professional for your needs from our extensive list of local services.',
+    description: 'Find the right professional for your needs from our extensive list of lokal services.',
     color: 'var(--primary)'
   },
   {
@@ -54,23 +54,23 @@ const HowItWorks = () => {
       <div className="section-container">
         <h2 className="heading-title">How It <span className="text-gradient">Works</span></h2>
         <p className="heading-subtitle">Get your tasks done in three simple steps</p>
-        
-        <div 
+
+        <div
           className="steps-container"
           ref={containerRef}
           onScroll={handleScroll}
         >
           {steps.map((step, index) => (
             <div key={index} className="step-card glass-card">
-              <div 
-                className="step-icon-wrapper" 
+              <div
+                className="step-icon-wrapper"
                 style={{ backgroundColor: `${step.color}20`, color: step.color }}
               >
                 {step.icon}
               </div>
               <h3 className="step-title">{step.title}</h3>
               <p className="step-description">{step.description}</p>
-              
+
               {index < steps.length - 1 && (
                 <div className="step-connector"></div>
               )}
@@ -80,7 +80,7 @@ const HowItWorks = () => {
 
         <div className="slider-indicators">
           {steps.map((_, idx) => (
-            <button 
+            <button
               key={idx}
               className={`indicator-dot ${activeIndex === idx ? 'active' : ''}`}
               onClick={() => scrollToIndex(idx)}

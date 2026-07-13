@@ -9,17 +9,17 @@ const cleanCategories = (rawCategories) => {
   const normalized = rawCategories.map(cat => {
     if (!cat) return '';
     let name = cat.trim();
-    
+
     const lower = name.toLowerCase();
     if (lower === 'test') return null;
-    
+
     if (lower === 'carpenter' || lower === 'carpenters') return 'Carpenter';
     if (lower === 'mason' || lower === 'masons') return 'Mason';
     if (lower === 'plumber' || lower === 'plumbers') return 'Plumber';
     if (lower === 'painter' || lower === 'painters') return 'Painter';
     if (lower === 'tiler' || lower === 'tilers') return 'Tiler';
     if (lower === 'electrician' || lower === 'electricians') return 'Electrician';
-    
+
     return name.charAt(0).toUpperCase() + name.slice(1);
   }).filter(Boolean);
 
@@ -38,7 +38,7 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
     Occupation: '', // Added for Customer role compatibility
     Password: '',
   });
-  
+
   const [availableSkills, setAvailableSkills] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -75,7 +75,7 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
         }
       };
       fetchConstituencies();
-      
+
       // Reset state when modal opens
       setError('');
       setSuccess('');
@@ -111,17 +111,17 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
         // 1. If 'Other' is selected, register the new skill first
         if (formData.SelectSkill === 'Other') {
           if (!formData.customSkill.trim()) {
-             setError("Please enter a custom skill name.");
-             setLoading(false);
-             return;
+            setError("Please enter a custom skill name.");
+            setLoading(false);
+            return;
           }
           finalSkill = formData.customSkill.trim();
-          
+
           // Basic normalization: capitalized first letter
           if (finalSkill) {
             finalSkill = finalSkill.charAt(0).toUpperCase() + finalSkill.slice(1);
           }
-          
+
           await fetch(`${API_URL}/add-available-skill`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -206,23 +206,23 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
         <button className="register-modal-close" onClick={onClose}>
           <X size={24} />
         </button>
-        
+
         <h2>{role === 'Professional' ? 'Join as a Pro' : 'Sign Up as a Client'}</h2>
         <p className="subtitle">
-          {role === 'Professional' 
-            ? 'Register to offer your skills to the local community.' 
+          {role === 'Professional'
+            ? 'Register to offer your skills to the local community.'
             : 'Find and connect with top-rated local professionals.'}
         </p>
 
         <div className="role-selector">
-          <button 
+          <button
             type="button"
             className={`role-tab ${role === 'Professional' ? 'active' : ''}`}
             onClick={() => setRole('Professional')}
           >
             I want to work
           </button>
-          <button 
+          <button
             type="button"
             className={`role-tab ${role === 'Customer' ? 'active' : ''}`}
             onClick={() => setRole('Customer')}
@@ -237,26 +237,26 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
         <form className="register-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="FullName">Full Name</label>
-            <input 
-              type="text" 
-              id="FullName" 
-              name="FullName" 
-              value={formData.FullName} 
-              onChange={handleChange} 
-              required 
+            <input
+              type="text"
+              id="FullName"
+              name="FullName"
+              value={formData.FullName}
+              onChange={handleChange}
+              required
               placeholder="e.g. John Doe"
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="MobileNumber">Mobile Number</label>
-            <input 
-              type="tel" 
-              id="MobileNumber" 
-              name="MobileNumber" 
-              value={formData.MobileNumber} 
-              onChange={handleChange} 
-              required 
+            <input
+              type="tel"
+              id="MobileNumber"
+              name="MobileNumber"
+              value={formData.MobileNumber}
+              onChange={handleChange}
+              required
               placeholder="e.g. 9876543210"
               pattern="[0-9]{10}"
               title="Please enter a valid 10-digit mobile number."
@@ -265,13 +265,13 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
 
           <div className="form-group">
             <label htmlFor="Password">Password</label>
-            <input 
-              type="password" 
-              id="Password" 
-              name="Password" 
-              value={formData.Password} 
-              onChange={handleChange} 
-              required 
+            <input
+              type="password"
+              id="Password"
+              name="Password"
+              value={formData.Password}
+              onChange={handleChange}
+              required
               placeholder="Create a password"
             />
           </div>
@@ -290,11 +290,11 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
             <>
               <div className="form-group">
                 <label htmlFor="SelectSkill">Primary Skill</label>
-                <select 
-                  id="SelectSkill" 
-                  name="SelectSkill" 
-                  value={formData.SelectSkill} 
-                  onChange={handleChange} 
+                <select
+                  id="SelectSkill"
+                  name="SelectSkill"
+                  value={formData.SelectSkill}
+                  onChange={handleChange}
                   required
                 >
                   <option value="" disabled>Select your skill</option>
@@ -308,13 +308,13 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
               {formData.SelectSkill === 'Other' && (
                 <div className="form-group">
                   <label htmlFor="customSkill">New Skill Name</label>
-                  <input 
-                    type="text" 
-                    id="customSkill" 
-                    name="customSkill" 
-                    value={formData.customSkill} 
-                    onChange={handleChange} 
-                    required 
+                  <input
+                    type="text"
+                    id="customSkill"
+                    name="customSkill"
+                    value={formData.customSkill}
+                    onChange={handleChange}
+                    required
                     placeholder="e.g. Plumber"
                   />
                 </div>
@@ -322,11 +322,11 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
 
               <div className="form-group">
                 <label htmlFor="Description">Professional Bio / Description</label>
-                <textarea 
-                  id="Description" 
-                  name="Description" 
-                  value={formData.Description} 
-                  onChange={handleChange} 
+                <textarea
+                  id="Description"
+                  name="Description"
+                  value={formData.Description}
+                  onChange={handleChange}
                   placeholder="Tell clients about your expertise, experience, and services..."
                   rows={3}
                 />
@@ -337,12 +337,12 @@ const RegisterModal = ({ isOpen, onClose, onLoginSuccess, initialRole = 'Profess
           {role === 'Customer' && (
             <div className="form-group">
               <label htmlFor="Occupation">Your Occupation (Optional)</label>
-              <input 
-                type="text" 
-                id="Occupation" 
-                name="Occupation" 
-                value={formData.Occupation} 
-                onChange={handleChange} 
+              <input
+                type="text"
+                id="Occupation"
+                name="Occupation"
+                value={formData.Occupation}
+                onChange={handleChange}
                 placeholder="e.g. Business Owner, Manager"
               />
             </div>

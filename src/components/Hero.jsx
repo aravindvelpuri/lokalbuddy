@@ -28,12 +28,12 @@ const Hero = ({ onRegisterClick, user }) => {
           </div>
 
           <h1 className="hero-main-title">
-            Instant Local Skills in<br />
+            Instant Lokal Skills in<br />
             <span className="text-pink-highlight">Minutes</span>
           </h1>
 
           <p className="hero-description">
-            Connect with trained & verified local experts for plumbing, electrical work, carpentry, tiling & more - instantly, whenever you need them.
+            Connect with trained & verified lokal experts for plumbing, electrical work, carpentry, tiling & more - instantly, whenever you need them.
           </p>
 
           <div className="feature-pills-row">
@@ -66,7 +66,7 @@ const Hero = ({ onRegisterClick, user }) => {
           <div className="hero-visual-card">
             {/* The model image generated */}
             <div className="hero-model-frame">
-              <img src="/hero_expert.png" alt="Local Skill Professional" className="hero-model-img" />
+              <img src="/hero_expert.png" alt="Lokal Skill Professional" className="hero-model-img" />
             </div>
 
             {/* Floating Ratings Badge */}

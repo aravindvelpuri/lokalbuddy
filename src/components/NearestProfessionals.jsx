@@ -23,7 +23,7 @@ const NearestProfessionals = ({ onConnect, currentUser, onViewAll, selectedCity,
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Sync selectedCity prop to local locationQuery state
+  // Sync selectedCity prop to lokal locationQuery state
   useEffect(() => {
     if (selectedCity !== undefined) {
       setLocationQuery(selectedCity);

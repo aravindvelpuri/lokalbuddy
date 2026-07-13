@@ -11,7 +11,7 @@ const Suppliers = ({ isSubscribed }) => {
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
   const [categories, setCategories] = useState(['All']);
   const [activeCategory, setActiveCategory] = useState('All');
-  
+
   // Search & Pagination State
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
@@ -19,7 +19,7 @@ const Suppliers = ({ isSubscribed }) => {
   const [page, setPage] = useState(1);
   const itemsPerPage = 12;
   const [totalPages, setTotalPages] = useState(1);
-  
+
   // Loading States
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -34,11 +34,11 @@ const Suppliers = ({ isSubscribed }) => {
       setLoading(true);
       const response = await fetch(`${SUPPLIERS_API_URL}/allsuppliersadmin`);
       const result = await response.json();
-      
+
       if (result.success && result.data) {
         setSuppliers(result.data);
         setFilteredSuppliers(result.data);
-        
+
         // Extract unique categories
         const uniqueCategories = ['All', ...new Set(result.data.map(s => s.category).filter(Boolean))];
         setCategories(uniqueCategories);
@@ -71,27 +71,27 @@ const Suppliers = ({ isSubscribed }) => {
   // Filter effect
   useEffect(() => {
     let filtered = suppliers;
-    
+
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(s => 
+      filtered = filtered.filter(s =>
         (s.companyName && s.companyName.toLowerCase().includes(query)) ||
         (s.ownerName && s.ownerName.toLowerCase().includes(query))
       );
     }
-    
+
     if (locationQuery) {
       const query = locationQuery.toLowerCase();
-      filtered = filtered.filter(s => 
+      filtered = filtered.filter(s =>
         (s.location && s.location.toLowerCase().includes(query)) ||
         (s.exactLocation && s.exactLocation.toLowerCase().includes(query))
       );
     }
-    
+
     if (activeCategory && activeCategory !== 'All') {
       filtered = filtered.filter(s => s.category === activeCategory);
     }
-    
+
     setFilteredSuppliers(filtered);
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
     setPage(1); // Reset to first page
@@ -113,7 +113,7 @@ const Suppliers = ({ isSubscribed }) => {
       setShowAlert(true);
       return;
     }
-    setShowConfirm(true); 
+    setShowConfirm(true);
   };
 
   const confirmSubscription = async () => {
@@ -121,15 +121,15 @@ const Suppliers = ({ isSubscribed }) => {
     const token = localStorage.getItem('token');
     const userRole = localStorage.getItem('userRole');
     const user = JSON.parse(localStorage.getItem('user'));
-    
-    const endpoint = userRole === 'Professional' 
-      ? `${API_URL}/subscribe-pro` 
+
+    const endpoint = userRole === 'Professional'
+      ? `${API_URL}/subscribe-pro`
       : `${API_URL}/subscribe`;
 
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'token': token
         },
@@ -154,14 +154,14 @@ const Suppliers = ({ isSubscribed }) => {
 
   const handleConnect = (supplier) => {
     if (supplier.leadType === 'through_me') {
-       setAlertContent({
-           title: 'Enquiry Contact',
-           message: `For enquiries regarding ${supplier.companyName}, please contact: ${supplier.addedByName || 'Admin'} at ${supplier.addedBy || 'our support line'}.`
-       });
-       setShowAlert(true);
-       return;
+      setAlertContent({
+        title: 'Enquiry Contact',
+        message: `For enquiries regarding ${supplier.companyName}, please contact: ${supplier.addedByName || 'Admin'} at ${supplier.addedBy || 'our support line'}.`
+      });
+      setShowAlert(true);
+      return;
     }
-    
+
     if (isSubscribed) {
       window.location.href = `tel:${supplier.phone}`;
     } else {
@@ -185,15 +185,15 @@ const Suppliers = ({ isSubscribed }) => {
     <section id="suppliers" className="services" style={{ background: 'var(--background-alt)' }}>
       <div className="section-container">
         <h2 className="heading-title">Explore <span className="text-primary">Suppliers & Vendors</span></h2>
-        <p className="heading-subtitle">Reliable local businesses for all your needs</p>
+        <p className="heading-subtitle">Reliable lokal businesses for all your needs</p>
 
         {/* Search & Filters */}
         <div className="search-filters glass-card">
           <div className="search-box">
             <Search size={18} style={{ color: 'var(--text-secondary)', marginRight: '0.5rem' }} />
-            <input 
-              type="text" 
-              placeholder="Search business or owner..." 
+            <input
+              type="text"
+              placeholder="Search business or owner..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -207,12 +207,12 @@ const Suppliers = ({ isSubscribed }) => {
             />
           </div>
           <div className="category-select">
-            <select 
-              value={activeCategory} 
+            <select
+              value={activeCategory}
               onChange={(e) => setActiveCategory(e.target.value)}
             >
               {categories.map((cat, idx) => (
-                 <option key={idx} value={cat}>{cat === 'All' ? 'All Categories' : cat}</option>
+                <option key={idx} value={cat}>{cat === 'All' ? 'All Categories' : cat}</option>
               ))}
             </select>
           </div>
@@ -222,27 +222,27 @@ const Suppliers = ({ isSubscribed }) => {
 
         <div className="professionals-grid">
           {loading ? (
-             Array.from({ length: 6 }).map((_, i) => <React.Fragment key={i}>{renderSkeleton()}</React.Fragment>)
+            Array.from({ length: 6 }).map((_, i) => <React.Fragment key={i}>{renderSkeleton()}</React.Fragment>)
           ) : displayedSuppliers.length === 0 ? (
-             <div className="empty-state glass-card" style={{ gridColumn: '1 / -1', padding: '4rem 2rem', textAlign: 'center' }}>
-               <Box size={48} style={{ color: 'var(--text-secondary)', margin: '0 auto 1rem', opacity: 0.5 }} />
-               <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>No suppliers found</h3>
-               <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search, location, or category filters to find what you're looking for.</p>
-             </div>
+            <div className="empty-state glass-card" style={{ gridColumn: '1 / -1', padding: '4rem 2rem', textAlign: 'center' }}>
+              <Box size={48} style={{ color: 'var(--text-secondary)', margin: '0 auto 1rem', opacity: 0.5 }} />
+              <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>No suppliers found</h3>
+              <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search, location, or category filters to find what you're looking for.</p>
+            </div>
           ) : (
-             displayedSuppliers.map((supplier, index) => (
+            displayedSuppliers.map((supplier, index) => (
               <div key={supplier._id || index} className="pro-card glass-card">
-                
+
                 <div className="badge-verified">
                   <ShieldCheck size={14} style={{ marginRight: '4px' }} /> VERIFIED
                 </div>
 
                 <div className="pro-avatar">
                   {supplier.logo ? (
-                    <img 
-                      src={supplier.logo} 
-                      alt={supplier.companyName} 
-                      style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--primary-light)' }} 
+                    <img
+                      src={supplier.logo}
+                      alt={supplier.companyName}
+                      style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--primary-light)' }}
                     />
                   ) : (
                     <div className="avatar-circle">
@@ -250,7 +250,7 @@ const Suppliers = ({ isSubscribed }) => {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="pro-info">
                   <h3 className="pro-name">{supplier.companyName}</h3>
                   <p className="pro-location" style={{ fontSize: '0.9rem', marginBottom: '0.2rem' }}>
@@ -258,7 +258,7 @@ const Suppliers = ({ isSubscribed }) => {
                   </p>
                   <p className="pro-location"><MapPin size={16} /> {supplier.location}</p>
                   <p className="pro-location" style={{ marginTop: '0.2rem', color: 'var(--primary)', fontWeight: '500' }}>{supplier.category}</p>
-                  
+
                   <div className="pro-phone mt-2">
                     <Phone size={16} />
                     {supplier.leadType === 'through_me' ? (
@@ -275,16 +275,16 @@ const Suppliers = ({ isSubscribed }) => {
                     )}
                   </div>
                 </div>
-                
+
                 {supplier.leadType === 'through_me' ? (
-                  <button 
+                  <button
                     className="button w-full mt-auto button-primary"
                     onClick={() => handleConnect(supplier)}
                   >
                     Enquiry Now
                   </button>
                 ) : (
-                  <button 
+                  <button
                     className={`button w-full mt-auto ${isSubscribed ? 'button-outline' : 'button-primary'}`}
                     onClick={() => handleConnect(supplier)}
                   >
@@ -299,8 +299,8 @@ const Suppliers = ({ isSubscribed }) => {
         {/* Load More Button */}
         {!loading && page < totalPages && (
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
-            <button 
-              className="button button-outline" 
+            <button
+              className="button button-outline"
               onClick={handleLoadMore}
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 2rem' }}
             >
@@ -311,7 +311,7 @@ const Suppliers = ({ isSubscribed }) => {
       </div>
 
       {/* Modals */}
-      <ConfirmModal 
+      <ConfirmModal
         isOpen={showConfirm}
         onClose={() => setShowConfirm(false)}
         onConfirm={confirmSubscription}
@@ -320,7 +320,7 @@ const Suppliers = ({ isSubscribed }) => {
         confirmText="Unlock Access"
       />
 
-      <AlertModal 
+      <AlertModal
         isOpen={showAlert}
         onClose={() => setShowAlert(false)}
         title={alertContent.title}
